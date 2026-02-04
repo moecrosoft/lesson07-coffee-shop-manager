@@ -1,10 +1,12 @@
-'use client';
+'use client'
+import {useState} from 'react';
+import {useEffect} from 'react';
 
-import { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import CustomerCounter from '../components/CustomerCounter';
-import OrderForm from '../components/OrderForm';
-import OrderList from '../components/OrderList';
+import Header from '../components/Header'
+import CustomerCounter from '../components/CustomerCounter'
+import OrderForm from '../components/OrderForm'
+import OrderList from '../components/OrderList'
+
 
 export default function CoffeeShopManager() {
     // ========================================
@@ -45,6 +47,11 @@ export default function CoffeeShopManager() {
         // Hint: Check if the values exist before setting state (if (savedValue) { ... })
         // Hint: Remember to parse the JSON string for orders before use setOrders: JSON.parse(savedOrders)
 
+        const savedOrders = localStorage.getItem('coffeeShop_orders');
+        if(savedOrders){
+            setOrders(JSON.parse(savedOrders))
+        }
+
     }, []);
 
     // ========================================
@@ -63,6 +70,11 @@ export default function CoffeeShopManager() {
     // Hint: Use localStorage.setItem('coffeeShop_orders', JSON.stringify(orders))
     // Hint: The dependency array should include [orders]
     // Hint: Don't forget to add a console.log to see when it runs!
+
+    useEffect(() => {
+        localStorage.setItem('coffeeShop_orders', JSON.stringify(orders))
+        console.log(`order saved: ${orders}`)
+    },[orders])
 
     return (
         <div className="min-h-screen bg-[#D2B48C] py-8 px-4">
